@@ -1,0 +1,24 @@
+{
+  "name": "devops-cicd-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thahir2005/devops-cicd-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thahir2005/devops-cicd-project/issues"
+  },
+  "homepage": "https://github.com/thahir2005/devops-cicd-project#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
