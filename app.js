@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('this is my first devops cicd project 🚀');
+  res.send('Welcome to My Automated DevOps App 🔥');
 });
 
 const PORT = 3000;
