@@ -1,4 +1,4 @@
-name: CI with Docker Push
+name: Secure CI/CD Pipeline
 
 on:
   push:
@@ -11,11 +11,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: SonarQube Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=devops-cicd-project
+            -Dsonar.sources=.
+
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-cicd-app:latest .
+
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/devops-cicd-app:latest
+          severity: CRITICAL,HIGH
+          exit-code: "1"
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/devops-cicd-app:latest
